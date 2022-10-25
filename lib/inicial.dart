@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:meu_primeiro_projeto/Telas.dart';
-
+import 'package:meu_primeiro_projeto/task_dao.dart';
+import 'package:intl/intl.dart';
 
 class inicial extends StatelessWidget {
   const inicial({super.key});
@@ -20,12 +21,16 @@ class inicial extends StatelessWidget {
         body: ListView(children: [
           Entrada('Registre seu ponto clicando no botão'),
           Saida('Registre a sua saída clicando no botão'),
+          Ver('Ver pontos Registrados!'),
         ]),
         //floatingActionButton: FloatingActionButton(onPressed: () {}),
       ),
     );
   }
 }
+
+
+DateTime now = DateTime.now();
 
 class Entrada extends StatefulWidget {
   final String nome;
@@ -37,6 +42,10 @@ class Entrada extends StatefulWidget {
 }
 
 class _EntradaState extends State<Entrada> {
+
+  String tipo = 'Entrada';
+  String data = DateFormat('dd-MM-yyyy – kk:mm').format(DateTime.now());
+
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -60,6 +69,7 @@ class _EntradaState extends State<Entrada> {
             ),
             ElevatedButton(
               onPressed: () {
+                TaskDao().save(tipo, data);
                 setState(() {
                   Navigator.push(context, MaterialPageRoute(builder: (context) => EnterScreen()));
                 });
@@ -83,6 +93,10 @@ class Saida extends StatefulWidget {
 }
 
 class _SaidaState extends State<Saida> {
+
+  String tipo = 'Saída';
+  String data = DateFormat('dd-MM-yyyy – kk:mm').format(DateTime.now());
+
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -106,12 +120,58 @@ class _SaidaState extends State<Saida> {
             ),
             ElevatedButton(
               onPressed: () {
+                TaskDao().save(tipo, data);
                 setState(() {
                   Navigator.push(context, MaterialPageRoute(builder: (context) => ExitScreen()));
                 });
                 print('Ponto registrado');
               },
               child: Text('Registrar!', style: TextStyle(fontSize: 25)),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class Ver extends StatefulWidget {
+  final String nome;
+
+  const Ver(this.nome, {Key? key}) : super(key: key);
+
+  @override
+  State<Ver> createState() => _ver();
+}
+
+class _ver extends State<Ver> {
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.all(12.0),
+      child: Container(
+        color: Colors.black12,
+        child: Column(
+          children: [
+            Container(
+              color: Colors.cyan,
+              height: 80,
+              width: 400,
+              child: Text(
+                widget.nome,
+                style: TextStyle(
+                  color: Colors.black54,
+                  fontSize: 30,
+                ),
+                textAlign: TextAlign.center,
+              ),
+            ),
+            ElevatedButton(
+              onPressed: () {
+                TaskDao().findAll();
+              },
+              child: Text('Ver Registros', style: TextStyle(fontSize: 25)),
             ),
           ],
         ),

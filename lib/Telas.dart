@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+
 class EnterScreen extends StatefulWidget {
   const EnterScreen({Key? key}) : super(key: key);
 
@@ -8,6 +9,7 @@ class EnterScreen extends StatefulWidget {
 }
 
 class _EnterScreenState extends State<EnterScreen> {
+
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
@@ -49,9 +51,11 @@ class ExitScreen extends StatefulWidget {
 }
 
 class _ExitScreenState extends State<ExitScreen> {
+
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
+    String dataFormatada;
     return ListView(
       children: [
         Padding(
@@ -72,14 +76,14 @@ class _ExitScreenState extends State<ExitScreen> {
                   'assets/images/sair.png',
                   fit: BoxFit.cover,
                 ),
-              )
+              ),
             ],
           ),
         ),
       ],
     );
+
     throw UnimplementedError();
+
   }
 }
-
-
